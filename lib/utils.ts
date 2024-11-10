@@ -7,6 +7,7 @@ import { twMerge } from "tailwind-merge";
 
 import { aspectRatioOptions } from "@/constants";
 
+// Improved type for the `cn` function
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -54,6 +55,12 @@ export const dataUrl = `data:image/svg+xml;base64,${toBase64(
 // ==== End
 
 // FORM URL QUERY
+export type FormUrlQueryParams = {
+  searchParams: URLSearchParams;
+  key: string;
+  value: string;
+};
+
 export const formUrlQuery = ({
   searchParams,
   key,
@@ -67,6 +74,8 @@ export const formUrlQuery = ({
 };
 
 // REMOVE KEY FROM QUERY
+
+
 export function removeKeysFromQuery({
   searchParams,
   keysToRemove,
@@ -86,19 +95,21 @@ export function removeKeysFromQuery({
 }
 
 // DEBOUNCE
-export const debounce = (func: (...args: any[]) => void, delay: number) => {
+export const debounce = (func: (...args: unknown[]) => void, delay: number) => {
   let timeoutId: NodeJS.Timeout | null;
-  return (...args: any[]) => {
+  return (...args: unknown[]) => {
     if (timeoutId) clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => func.apply(null, args), delay);
+    timeoutId = setTimeout(() => func(...args), delay);
   };
 };
 
 // GE IMAGE SIZE
 export type AspectRatioKey = keyof typeof aspectRatioOptions;
+export type ImageProps = { aspectRatio?: string; width?: number; height?: number };
+
 export const getImageSize = (
   type: string,
-  image: any,
+  image: ImageProps,
   dimension: "width" | "height"
 ): number => {
   if (type === "fill") {
@@ -132,8 +143,8 @@ export const download = (url: string, filename: string) => {
 };
 
 // DEEP MERGE OBJECTS
-export const deepMergeObjects = (obj1: any, obj2: any) => {
-  if(obj2 === null || obj2 === undefined) {
+export const deepMergeObjects = (obj1: Record<string, unknown>, obj2: Record<string, unknown>) => {
+  if (obj2 === null || obj2 === undefined) {
     return obj1;
   }
 
@@ -147,7 +158,7 @@ export const deepMergeObjects = (obj1: any, obj2: any) => {
         obj2[key] &&
         typeof obj2[key] === "object"
       ) {
-        output[key] = deepMergeObjects(obj1[key], obj2[key]);
+        output[key] = deepMergeObjects(obj1[key] as Record<string, unknown>, obj2[key] as Record<string, unknown>);
       } else {
         output[key] = obj1[key];
       }
