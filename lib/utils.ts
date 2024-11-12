@@ -143,7 +143,7 @@ export const download = (url: string, filename: string) => {
 };
 
 // DEEP MERGE OBJECTS
-export const deepMergeObjects = (obj1: Record<string, unknown>, obj2: Record<string, unknown>) => {
+export const deepMergeObjects = (obj1: Record<string, unknown> | null, obj2: Record<string, unknown> | null) => {
   if (obj2 === null || obj2 === undefined) {
     return obj1;
   }
