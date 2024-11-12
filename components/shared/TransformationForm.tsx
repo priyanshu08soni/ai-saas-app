@@ -58,7 +58,7 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
 
   const form = useForm<z.infer<typeof formSchema>>({
       resolver: zodResolver(formSchema),
-      defaultValues: initialValues,
+      defaultValues: initialValues
   })
 
   function onSubmit(values: z.infer<typeof formSchema>){
