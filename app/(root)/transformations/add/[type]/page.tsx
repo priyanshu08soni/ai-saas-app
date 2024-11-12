@@ -13,9 +13,9 @@ const AddTransformationTypePage = async({ params: {type} } : SearchParamProps) =
   const user = await getUserById(userId);
   return (
     <>
-      // getting the transformation type from params
-      // then getting the object by using this type value
-      // then updating title and subtitle from transformation
+      {/* getting the transformation type from params
+      then getting the object by using this type value
+      then updating title and subtitle from transformation */}
       <Header title= {transformation.title} subtitle={transformation.subTitle} />
       <section className='mt-10'>
         <TransformationForm
