@@ -7,15 +7,13 @@ import { getUserById } from '@/lib/actions/user.action';
 import { redirect } from 'next/navigation';
 
 
-const AddTransformationTypePage = async({ params: {type} } : {
-  params: { type:  | "restore"
-  | "fill"
-  | "remove"
-  | "recolor"
-  | "removeBackground" };
+const AddTransformationTypePage = async({
+  params,
+}: {
+  params: { type: "restore" | "fill" | "remove" | "recolor" | "removeBackground" };
 }) => {
   const { userId }  = await auth();
-  const transformation = transformationTypes[type];
+  const transformation = transformationTypes[params.type];
   if(!userId) redirect('/sign-in');
   const user = await getUserById(userId);
   return (
