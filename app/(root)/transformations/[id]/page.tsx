@@ -1,6 +1,6 @@
 import React from 'react'
 
-const TransformationsPage = ({params: {id}}: SearchParamProps) => {
+const TransformationsPage = async ({params: {id}}: SearchParamProps) => {
   return (
     <div>
       TransformationsPage

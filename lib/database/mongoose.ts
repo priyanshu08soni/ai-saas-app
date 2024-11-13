@@ -1,3 +1,5 @@
+
+
 import mongoose, { Mongoose } from 'mongoose';
 
 interface MongooseConnection {
@@ -13,13 +15,9 @@ export const connectToDatabase = async (): Promise<Mongoose> => {
     return cachedConnection.conn;
   }
 
-  if (!process.env.MONGODB_URL) {
-    throw new Error('Missing MONGODB_URL');
-  }
-
   cachedConnection.promise = 
     cachedConnection.promise || 
-    mongoose.connect(process.env.MONGODB_URL, { 
+    mongoose.connect("mongodb+srv://MM:834@cluster0.yjk8m.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", { 
       dbName: 'MegaMinds', bufferCommands: false 
     });
 
