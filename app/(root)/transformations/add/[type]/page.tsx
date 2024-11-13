@@ -1,4 +1,3 @@
-"use client";
 import Header from '@/components/shared/Header'
 import React from 'react'
 import { transformationTypes } from '@/constants'
@@ -6,12 +5,13 @@ import TransformationForm from '@/components/shared/TransformationForm';
 import { auth } from '@clerk/nextjs/server';
 import { getUserById } from '@/lib/actions/user.action';
 import { redirect } from 'next/navigation';
-import { useParams } from 'next/navigation';
 
-const AddTransformationTypePage = async() => {
+
+const AddTransformationTypePage = async({ params: {type} } : {
+  params: { type: TransformationTypeKey };
+}) => {
   const { userId }  = await auth();
-  const params = useParams<{type: TransformationTypeKey}>()
-  const transformation = transformationTypes[params.type];
+  const transformation = transformationTypes[type];
   if(!userId) redirect('/sign-in');
   const user = await getUserById(userId);
   return (
