@@ -8,12 +8,12 @@ import { redirect } from 'next/navigation';
 
 
 const AddTransformationTypePage = async({
-  params,
+  params: { type }
 }: {
   params: { type: "restore" | "fill" | "remove" | "recolor" | "removeBackground" };
 }) => {
   const { userId }  = await auth();
-  const transformation = transformationTypes[params.type];
+  const transformation = transformationTypes[type];
   if(!userId) redirect('/sign-in');
   const user = await getUserById(userId);
   return (
