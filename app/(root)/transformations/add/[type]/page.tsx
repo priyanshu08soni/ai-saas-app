@@ -8,7 +8,11 @@ import { redirect } from 'next/navigation';
 
 
 const AddTransformationTypePage = async({ params: {type} } : {
-  params: { type: TransformationTypeKey };
+  params: { type:  | "restore"
+  | "fill"
+  | "remove"
+  | "recolor"
+  | "removeBackground" };
 }) => {
   const { userId }  = await auth();
   const transformation = transformationTypes[type];
