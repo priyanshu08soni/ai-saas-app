@@ -1,4 +1,4 @@
-"user server";
+
 
 import { revalidatePath } from "next/cache";
 import { connectToDatabase } from "../database/mongoose";
@@ -21,7 +21,7 @@ export async function addImage({image, userId, path}: AddImageParams){
         const author = await User.findById(userId);
 
         if(!author){
-            throw new Error("User Not Found")
+            console.log("User not found!");
         }
 
         const newImage = await Image.create({
@@ -43,7 +43,7 @@ export async function updateImage({image, userId, path}: UpdateImageParams){
         const imageToUpdate = await Image.findById(image._id);
 
         if(!imageToUpdate || imageToUpdate.author.toHexString() !== userId){
-            throw new Error("Unauthorized or Image not found")
+            console.log("Unauthorized or Image not found")
         }
 
         const updatedImage = await Image.findByIdAndUpdate(
@@ -78,7 +78,7 @@ export async function getImageById(imageId: string){
 
         const image = await populateUser(Image.findById(imageId));
 
-        if(!image) throw new Error("Image not found");
+        if(!image)  console.log("Image not Fount");
 
         return JSON.parse(JSON.stringify(image));
     } catch (error) {

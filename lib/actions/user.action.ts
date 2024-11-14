@@ -26,7 +26,7 @@ export async function getUserById(userId: string) {
 
     const user = await User.findOne({ clerkId: userId });
 
-    if (!user) throw new Error("User not found");
+    if (!user) console.log("User not found!");
 
     return JSON.parse(JSON.stringify(user));
   } catch (error) {
@@ -43,7 +43,7 @@ export async function updateUser(clerkId: string, user: UpdateUserParams) {
       new: true,
     });
 
-    if (!updatedUser) throw new Error("User update failed");
+    if (!updatedUser) new Error("User update failed");
     
     return JSON.parse(JSON.stringify(updatedUser));
   } catch (error) {
@@ -60,7 +60,7 @@ export async function deleteUser(clerkId: string) {
     const userToDelete = await User.findOne({ clerkId });
 
     if (!userToDelete) {
-      throw new Error("User not found");
+      new Error("User not found");
     }
 
     // Delete user
@@ -84,7 +84,7 @@ export async function updateCredits(userId: string, creditFee: number) {
       { new: true }
     )
 
-    if(!updatedUserCredits) throw new Error("User credits update failed");
+    if(!updatedUserCredits) console.log("User credit not found!");
 
     return JSON.parse(JSON.stringify(updatedUserCredits));
   } catch (error) {

@@ -1,27 +1,32 @@
-
-
 import mongoose, { Mongoose } from 'mongoose';
+
+const MONGODB_URL = "mongodb+srv://MM:834@cluster0.yjk8m.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 interface MongooseConnection {
   conn: Mongoose | null;
   promise: Promise<Mongoose> | null;
 }
 
-// Module-scoped variable to cache the connection
-const cachedConnection: MongooseConnection = { conn: null, promise: null };
+let cached: MongooseConnection = (global as any).mongoose
 
-export const connectToDatabase = async (): Promise<Mongoose> => {
-  if (cachedConnection.conn) {
-    return cachedConnection.conn;
+if(!cached) {
+  cached = (global as any).mongoose = { 
+    conn: null, promise: null 
   }
+}
 
-  cachedConnection.promise = 
-    cachedConnection.promise || 
-    mongoose.connect("mongodb+srv://MM:834@cluster0.yjk8m.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", { 
+export const connectToDatabase = async () => {
+  if(cached.conn) return cached.conn;
+
+  if(!MONGODB_URL) throw new Error('Missing MONGODB_URL');
+
+  cached.promise = 
+    cached.promise || 
+    mongoose.connect(MONGODB_URL, { 
       dbName: 'MegaMinds', bufferCommands: false 
-    });
+    })
 
-  cachedConnection.conn = await cachedConnection.promise;
+  cached.conn = await cached.promise;
 
-  return cachedConnection.conn;
-};
+  return cached.conn;
+}

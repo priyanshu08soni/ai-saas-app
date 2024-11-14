@@ -2,13 +2,21 @@
 import { navLinks } from '@/constants'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import {UserButton,SignedIn,SignedOut} from '@clerk/nextjs'
 import { usePathname } from 'next/navigation'
 import { Button } from '../ui/button';
 const Sidebar = () => {
   const pathname = usePathname();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) return null; // Avoid SSR mismatch by not rendering until client-side
+
   return (
     <aside className='sidebar'>
       <div className="flex size-full flex-col gap-4">

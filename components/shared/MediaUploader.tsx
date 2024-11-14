@@ -5,6 +5,7 @@ import { dataUrl, getImageSize } from "@/lib/utils";
 import { CldImage, CldUploadWidget } from "next-cloudinary"
 import { PlaceholderValue } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
+import React from "react";
 
 type MediaUploaderProps = {
     onValueChange: (value: string) => void;
@@ -41,8 +42,8 @@ const MediaUploader = ({
     }
     const onUploadErrorHandler = () =>{
         toast({
-            title: 'Somthing went wrong while uploading',
-            description: 'Pleasse try again',
+            title: 'Something went wrong while uploading',
+            description: 'Please try again',
             duration: 5000,
             className: 'success-toast'
         })

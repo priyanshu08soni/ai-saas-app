@@ -13,7 +13,9 @@ const TransformedImage = ({
   setIsTransforming,
   hasDownload = false,
 }: TransformedImageProps) => {
-  const downloadHandler = () => {};
+  const downloadHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    console.log(e,title);
+  };
   return (
     <div className="flex flex-col gap-4">
       <div className="flex-between">

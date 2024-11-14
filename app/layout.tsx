@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { 
   ClerkProvider
 } from "@clerk/nextjs";
+import React from "react";
 
 const IBMPlex = IBM_Plex_Sans({
   subsets: ["latin"],

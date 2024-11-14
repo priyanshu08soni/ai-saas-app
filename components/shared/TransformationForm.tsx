@@ -148,7 +148,7 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
     //debounce creates a lag in fetching the input to release the stress on the server ( fetching image or transformation );
     debounce(()=>{
       setNewTransformation((prevState:any)=> ({
-        //immidiately return the object where we spread the prevState
+        //immediately return the object where we spread the prevState
         ...prevState,
         //(tapping into a specific property  = recolor or remove)  modify the type of transformation to ...prevState?.[type]
         [type]: {
