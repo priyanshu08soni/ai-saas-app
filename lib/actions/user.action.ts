@@ -26,7 +26,7 @@ export async function getUserById(userId: string) {
 
     const user = await User.findOne({ clerkId: userId });
 
-    if (!user) console.log("User not found!");
+    if (!user) throw new Error("User Not Found");
 
     return JSON.parse(JSON.stringify(user));
   } catch (error) {
@@ -84,7 +84,7 @@ export async function updateCredits(userId: string, creditFee: number) {
       { new: true }
     )
 
-    if(!updatedUserCredits) console.log("User credit not found!");
+    if(!updatedUserCredits) throw new Error("User credit not found!");
 
     return JSON.parse(JSON.stringify(updatedUserCredits));
   } catch (error) {
