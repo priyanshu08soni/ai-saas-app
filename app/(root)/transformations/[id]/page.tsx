@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { getImageSize } from "@/lib/utils";
 import { auth } from "@clerk/nextjs/server";
 import { getImageById } from "@/lib/actions/image.action";
+import { DeleteConfirmation } from "@/components/shared/DeleteConfirmation";
 
 const ImageDetails = async ({ params }: SearchParamProps) => {
   const { userId } = await auth();
@@ -90,6 +91,7 @@ const ImageDetails = async ({ params }: SearchParamProps) => {
               </Link>
             </Button>
 
+            <DeleteConfirmation imageId = {image._id} />
            
           </div>
         )}
