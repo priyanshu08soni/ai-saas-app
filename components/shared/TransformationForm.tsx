@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useTransition } from 'react'
+import React, { useEffect, useState, useTransition } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/select"
 
 import { Input } from "@/components/ui/input";
-import { aspectRatioOptions, defaultValues, transformationTypes } from '@/constants';
+import { aspectRatioOptions, creditFee, defaultValues, transformationTypes } from '@/constants';
 import { CustomField } from './CustomField';
 import { AspectRatioKey, debounce, deepMergeObjects } from '@/lib/utils';
 import MediaUploader from './MediaUploader';
@@ -28,6 +28,7 @@ import { updateCredits } from '@/lib/actions/user.action';
 import { getCldImageUrl } from 'next-cloudinary';
 import { addImage, updateImage } from '@/lib/actions/image.action';
 import { useRouter } from 'next/navigation';
+import { InsufficientCreditsModal } from './InsufficientCreditsModel';
 
 export const formSchema = z.object({
     title: z.string(),
@@ -162,7 +163,7 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
       return onChangeField(value);
     },1000);
   }
-  const onTransformationHandler = async() =>{
+  const onTransformHandler = async() =>{
     setIsTransforming(true);
     setTransformationConfig(
       deepMergeObjects(newTransformation,transformationConfig)
@@ -170,13 +171,20 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
     setNewTransformation(null);
 
     startTransition(async()=>{
-      await updateCredits(userId, -1);
+      await updateCredits(userId, creditFee);
     })
   }
+
+  useEffect(()=>{
+    if(image && ( type === 'restore' || type === 'removeBackground')){
+      setNewTransformation(transformationType.config);
+    }
+  },[image, transformationType.config, type]);
     
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        { creditBalance < Math.abs(creditFee) && <InsufficientCreditsModal/> }
         <CustomField
           control={form.control}
           name='title'
@@ -276,7 +284,7 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
             type="button"
             className='submit-button capitalize'
             disabled={isTransforming || newTransformation === null}
-            onClick={onTransformationHandler}
+            onClick={onTransformHandler}
           >
             {
               isTransforming? 'Transforming...' : 'Apply Transformation'
