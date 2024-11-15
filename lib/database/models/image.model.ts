@@ -46,6 +46,9 @@ const ImageSchema = new Schema({
     height: {
         type: Number
     },
+    config: {
+        type: Object
+    },
     transformationURL: {
         type: String
     },

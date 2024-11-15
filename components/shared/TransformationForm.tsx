@@ -89,15 +89,17 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
         }
         if(action === 'Add'){
           try {
+            console.log(imageData);
             const newImage = await addImage({
               image: imageData,
               userId,
               path: '/'
             });
-
+            
             if(newImage){
               form.reset()
               setImage(data);
+              console.log(image);
               router.push(`/transformations/${newImage._id}`)
             }
           } catch (error) {
