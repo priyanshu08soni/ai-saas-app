@@ -1,6 +1,6 @@
 const mongoose = require('mongoose'); // Use require instead of import
 
-const MONGODB_URL = "mongodb+srv://MM:834@cluster0.yjk8m.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const MONGODB_URL = process.env.MONGODB_URL;
 
 interface MongooseConnection {
   conn: typeof mongoose | null;
