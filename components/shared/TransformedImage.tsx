@@ -48,7 +48,14 @@ const TransformedImage = ({
             width={getImageSize(type, image, "width")}
             height={getImageSize(type, image, "height")}
             src={image?.publicId}
-            alt={image?.title}
+            alt={
+              image?.title 
+                || (type === "remove" ? "Image with object removed" 
+                    : type === "recolor" ? "Recolored image" 
+                    : type === "restore" ? "Restored image" 
+                    : type === "fill" ? "Resized image" 
+                    : "Transformed image")
+            }
             sizes={"(max-width: 767px) 100vw, 50vw"}
             placeholder={dataUrl as PlaceholderValue}
             className="transformed-image"
